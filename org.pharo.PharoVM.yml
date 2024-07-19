@@ -1,0 +1,74 @@
+app-id: org.pharo.PharoVM
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+command: pharo
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11 # If Wayland isn't available it will use X11
+  # Wayland access
+  - --socket=wayland
+  # GPU acceleration if needed
+  - --device=dri
+  # Needs to talk to the network:
+  - --share=network
+  # Needs to save files locally
+  - --filesystem=/home:rw
+
+modules:
+  - name: PharoVM
+    buildsystem: simple
+    builddir: true
+    #config-opts:
+    #  - -S pharo-vm-10.3.0
+    #  - -B build
+    build-commands:
+      - cmake -B build
+      - cmake --build build --target install
+      
+    arch: x86_64
+
+    sources:
+      - type: archive
+        url: https://github.com/pharo-project/pharo-vm/archive/refs/tags/v10.3.0.zip
+        sha256: 72592099d604422ea37199305d4fac16a804b4e94d343fc476fce3f8eccecb1f
+        
+        # Dependencies
+      - type: archive
+        url: https://libsdl.org/release/SDL2-2.24.1.tar.gz
+        sha256: bc121588b1105065598ce38078026a414c28ea95e66ed2adab4c44d80b309e1b
+      - type: archive
+        url: https://download.sourceforge.net/libpng/libpng-1.6.37.tar.gz
+        sha256: daeb2620d829575513e35fecc83f0d3791a620b9b93d800b763542ece9390fb4
+      - type: archive
+        url: https://zlib.net/fossils/zlib-1.2.11.tar.gz
+        sha256: c3e5e9fdd5004dcb542feda5ee4f0ff0744628baf8ed2dd5d66f8ca1197cb1a1
+      - type: archive
+        url: https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz
+        sha256: ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269
+      - type: archive
+        url: https://sourceforge.net/projects/freetype/files/freetype2/2.12.1/freetype-2.12.1.tar.xz
+        sha256: 4766f20157cc4cf0cd292f80bf917f92d1c439b243ac3018debf6b9140c41a7f
+      - type: archive
+        url: https://github.com/libexpat/libexpat/releases/download/R_2_5_0/expat-2.5.0.tar.gz
+        sha256: 6b902ab103843592be5e99504f846ec109c1abb692e85347587f237a4ffa1033
+      - type: archive
+        url: https://freedesktop.org/software/fontconfig/release/fontconfig-2.13.1.tar.gz
+        sha256: 9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f
+      - type: archive
+        url: https://www.cairographics.org/releases/pixman-0.40.0.tar.gz
+        sha256: 6d200dec3740d9ec4ec8d1180e25779c00bc749f94278c8b9021f5534db223fc
+      - type: archive
+        url: https://cairographics.org/snapshots/cairo-1.17.4.tar.xz
+        sha256: 74b24c1ed436bbe87499179a3b27c43f4143b8676d8ad237a6fa787401959705
+      - type: archive
+        url: https://github.com/harfbuzz/harfbuzz/releases/download/5.3.1/harfbuzz-5.3.1.tar.xz
+        sha256: 4a6ce097b75a8121facc4ba83b5b083bfec657f45b003cd5a3424f2ae6b4434d
+        
+      - type: file
+        path: org.pharo.PharoVM.desktop
+      - type: file
+        path: pharo.png
+
+

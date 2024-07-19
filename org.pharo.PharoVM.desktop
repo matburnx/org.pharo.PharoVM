@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Pharo VM
+Comment=The VM used by Pharo to launch its images
+Exec=pharo
+Icon=org.pharo.PharoVM
+Terminal=false
+StartupNotify=false
+Categories=Development;
+
